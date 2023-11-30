@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    let emojis = ["🎃", "👻", "💀", "🕷️", "😈", "☠️", "🕸️"]
-    @State var cardCount = 4
+    @State var emojis: [String] = []
+    @State var cardCount = 0
+    @State var color: Color = .orange
     
+    let vehicles = ["✈️", "🚜", "🚂", "🚑", "🚁", "🚀", "🏍", "🚤", "🛴", "🛺", "🛩️"]
+    let cloth = ["👖", "👗", "🧦", "🧢", "🥋", "🩳", "👘", "🧣"]
+    let animals = ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑"]
+    
+    //MARK: - UIBlocks
     var body: some View {
         VStack {
             ScrollView {
