@@ -29,13 +29,15 @@ struct ContentView: View {
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 95), spacing: 0)], spacing: 0) {
             ForEach(0..<cardCount, id: \.self) { index in
                 CardView(content: emojis[index])
-                    .aspectRatio(2/3, contentMode: .fit)
+                CardView(content: emojis[index + emojis.count/2])
             }
+            .aspectRatio(2/3, contentMode: .fit)
+            .padding(4)
         }
-        .foregroundColor(.orange)
+        .foregroundColor(color)
     }
     
     var buttons: some View {
