@@ -87,15 +87,10 @@ struct ContentView: View {
     }
 }
 
-
+//MARK: - ViewModel
 struct CardView: View {
     let content: String
     @State var isFaceUp = true
-    
-    init(content: String, isFaceUp: Bool = false) {
-        self.content = content
-        self.isFaceUp = isFaceUp
-    }
 
     var body: some View {
         ZStack {
@@ -106,7 +101,9 @@ struct CardView: View {
                 base
                     .strokeBorder(lineWidth: 2)
                 Text(content)
-                    .font(.largeTitle)
+                    .font(.system(size: 200))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(1, contentMode: .fit)
                 
             }
             .opacity(isFaceUp ? 1 : 0 )
