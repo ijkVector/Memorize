@@ -19,11 +19,11 @@ struct ContentView: View {
     //MARK: - UIBlocks
     var body: some View {
         VStack {
+            title
             ScrollView {
                 cards
             }
-            Spacer()
-            cardCountAdjusters
+            buttons
         }
         .padding()
     }
@@ -38,31 +38,50 @@ struct ContentView: View {
         .foregroundColor(.orange)
     }
     
-    var cardCountAdjusters: some View {
-        HStack {
-            cardRemover
+    var buttons: some View {
+        HStack(alignment: .center) {
             Spacer()
-            cardAdder
+            vehiclesTheme
+            Spacer()
+            clothTheme
+            Spacer()
+            animalsTheme
+            Spacer()
         }
-        .imageScale(.large)
         .font(.largeTitle)
     }
     
-    func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
+    //MARK: - UIConfiguration
+    func themeConfiguration(themeEmojis: [String], text: String, symbol: String, color withColor: Color) -> some View {
         Button(action: {
-            cardCount += offset
+            cardCount = Int.random(in: 2..<9)
+            emojis = themeEmojis[0..<cardCount].shuffled() + themeEmojis[0..<cardCount].shuffled()
+            color = withColor
         }, label: {
-            Image(systemName: symbol)
+            VStack {
+                Image(systemName: symbol)
+                Text(text).font(.footnote)
+            }
         })
-        .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
     }
     
-    var cardRemover: some View {
-        cardCountAdjuster(by: -1, symbol: "rectangle.stack.badge.minus.fill")
+    //MARK: - UIElementaryElements
+    var vehiclesTheme: some View {
+        themeConfiguration(themeEmojis: vehicles ,text: "Vehicles",symbol: "car", color: .red)
     }
     
-    var cardAdder: some View {
-        cardCountAdjuster(by: +1, symbol: "rectangle.stack.badge.plus.fill")
+    var clothTheme: some View {
+        themeConfiguration(themeEmojis: cloth, text: "Cloth", symbol: "hanger", color: .orange)
+    }
+    
+    var animalsTheme: some View {
+        themeConfiguration(themeEmojis: animals, text: "Animals",symbol: "hare", color: .green)
+    }
+    
+    var title: some View {
+        Text("Memorize!")
+            .imageScale(.large)
+            .font(.largeTitle)
     }
 }
 
