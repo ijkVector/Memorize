@@ -8,82 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var emojis: [String] = []
-    @State var cardCount = 0
-    @State var color: Color = .orange
-    
-    let vehicles = ["✈️", "🚜", "🚂", "🚑", "🚁", "🚀", "🏍", "🚤", "🛴", "🛺", "🛩️"]
-    let cloth = ["👖", "👗", "🧦", "🧢", "🥋", "🩳", "👘", "🧣"]
-    let animals = ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑"]
+    @State var emojis = ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑"]
     
     //MARK: - UIBlocks
     var body: some View {
-        VStack {
-            title
-            ScrollView {
-                cards
-            }
-            buttons
+        ScrollView {
+            cards
         }
         .padding()
     }
     
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 95), spacing: 0)], spacing: 0) {
-            ForEach(0..<cardCount, id: \.self) { index in
+            ForEach(emojis.indices, id: \.self) { index in
                 CardView(content: emojis[index])
-                CardView(content: emojis[index + emojis.count/2])
             }
             .aspectRatio(2/3, contentMode: .fit)
             .padding(4)
         }
-        .foregroundColor(color)
-    }
-    
-    var buttons: some View {
-        HStack(alignment: .center) {
-            Spacer()
-            vehiclesTheme
-            Spacer()
-            clothTheme
-            Spacer()
-            animalsTheme
-            Spacer()
-        }
-        .font(.largeTitle)
-    }
-    
-    //MARK: - UIConfiguration
-    func themeConfiguration(themeEmojis: [String], text: String, symbol: String, color withColor: Color) -> some View {
-        Button(action: {
-            cardCount = Int.random(in: 2..<9)
-            emojis = themeEmojis[0..<cardCount].shuffled() + themeEmojis[0..<cardCount].shuffled()
-            color = withColor
-        }, label: {
-            VStack {
-                Image(systemName: symbol)
-                Text(text).font(.footnote)
-            }
-        })
-    }
-    
-    //MARK: - UIElementaryElements
-    var vehiclesTheme: some View {
-        themeConfiguration(themeEmojis: vehicles ,text: "Vehicles",symbol: "car", color: .red)
-    }
-    
-    var clothTheme: some View {
-        themeConfiguration(themeEmojis: cloth, text: "Cloth", symbol: "hanger", color: .orange)
-    }
-    
-    var animalsTheme: some View {
-        themeConfiguration(themeEmojis: animals, text: "Animals",symbol: "hare", color: .green)
-    }
-    
-    var title: some View {
-        Text("Memorize!")
-            .imageScale(.large)
-            .font(.largeTitle)
+        .foregroundColor(.orange)
     }
 }
 
