@@ -21,20 +21,20 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    @Published private var model = createMemoryGame()
+    @Published private var game = createMemoryGame()
      
     
     var cards: [MemoryGame<String>.Card] {
-        return model.cards
+        return game.cards
     }
     
     //MARK: - Intents
     
     func shuffle() {
-        model.shuffle()
+        game.shuffle()
     }
     
     func choose(_ card: MemoryGame<String>.Card) {
-        model.choose(card)
+        game.choose(card)
     }
 }
