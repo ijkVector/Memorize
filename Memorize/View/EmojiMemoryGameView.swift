@@ -19,6 +19,9 @@ struct EmojiMemoryGameView: View {
                 cards
                     .animation(.default, value: emojiGame.cards)
             }
+            Text("Score: \(emojiGame.score)")
+                .foregroundColor(.red)
+                .font(.title2)
             Button("New Game") {
                 emojiGame.newGame()
             }
