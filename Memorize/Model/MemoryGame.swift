@@ -9,8 +9,9 @@ import Foundation
 
 struct MemoryGame<CardContent: Equatable> {
     private(set) var cards: [Card]
+    private(set) var score: Int = 0
     
-    init(numberOfPairsOfCards: Int, cardContenFactory: (Int) -> CardContent) {
+    init(_ numberOfPairsOfCards: Int, cardContenFactory: (Int) -> CardContent) {
         cards = []
         for pairIndex in 0..<max(2, numberOfPairsOfCards) {
             let content = cardContenFactory(pairIndex)
@@ -31,6 +32,12 @@ struct MemoryGame<CardContent: Equatable> {
                     if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                         cards[chosenIndex].isMatched = true
                         cards[potentialMatchIndex].isMatched = true
+                        score += 2
+                    } else {
+                        score += cards[chosenIndex].isBeenSeen ? -1 : 0
+                        score += cards[potentialMatchIndex].isBeenSeen ? -1 : 0
+                        cards[chosenIndex].isBeenSeen = true
+                        cards[potentialMatchIndex].isBeenSeen = true
                     }
                 } else {
                     indexOfTheOnlyAndOnlyFaceUPCard = chosenIndex
