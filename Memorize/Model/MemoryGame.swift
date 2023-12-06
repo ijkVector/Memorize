@@ -55,6 +55,7 @@ struct MemoryGame<CardContent: Equatable> {
         
         var isFaceUp = false
         var isMatched = false
+        var isBeenSeen = false
         let content: CardContent
         
         var id: String
