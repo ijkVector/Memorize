@@ -40,10 +40,41 @@ class EmojiMemoryGame: ObservableObject {
         return game.cards
     }
     
+    var name: String {
+        return currentTheme.name
+    }
+    
+    var score: Int {
+        return game.score
+    }
+    
+    var color: Color {
+        switch currentTheme.color {
+        case .orange:
+            return .orange
+        case .red:
+            return .red
+        case .blue:
+            return .blue
+        case .green:
+            return .green
+        case .yellow:
+            return .yellow
+        case .purple:
+            return .purple
+        }
+    }
+    
     //MARK: - Intents
     
-    func shuffle() {
-        game.shuffle()
+    func newGame() {
+        if let theme = themes.randomElement() {
+            currentTheme = theme
+            currentTheme.shuffle()
+            
+            game = EmojiMemoryGame.createMemoryGame(withTheme: currentTheme)
+            game.shuffle()
+        }
     }
     
     func choose(_ card: MemoryGame<String>.Card) {

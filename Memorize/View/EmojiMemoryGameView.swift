@@ -13,12 +13,14 @@ struct EmojiMemoryGameView: View {
     //MARK: - UIBlocks
     var body: some View {
         VStack {
+            Text(emojiGame.name)
+                .font(.largeTitle)
             ScrollView {
                 cards
                     .animation(.default, value: emojiGame.cards)
             }
             Button("New Game") {
-                emojiGame.shuffle()
+                emojiGame.newGame()
             }
             .font(.title)
         }
@@ -36,7 +38,7 @@ struct EmojiMemoryGameView: View {
                     }
             }
         }
-        .foregroundColor(.orange)
+        .foregroundColor(emojiGame.color)
     }
 }
 
@@ -72,5 +74,9 @@ struct CardView: View {
 
 
 #Preview {
-    EmojiMemoryGameView(emojiGame: EmojiMemoryGame())
+    EmojiMemoryGameView(emojiGame: 
+                            EmojiMemoryGame(
+                                currentTheme: Theme(name: "Animals", emoijs: ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑"], numberOfPairs: 4, color: .orange)
+                            )
+    )
 }
