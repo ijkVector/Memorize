@@ -11,7 +11,7 @@ struct Theme: CustomDebugStringConvertible {
     let name: String
     private(set) var emojis: [String]
     let numberOfPairsOfCards: Int
-    private(set) var color: UIIndependentColor
+    let color: UIIndependentColor
     
     init(name: String, emoijs: [String], numberOfPairs: Int, color: UIIndependentColor) {
         self.name = name

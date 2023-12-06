@@ -9,6 +9,13 @@ import SwiftUI
 
 
 class EmojiMemoryGame: ObservableObject {
+    
+    //MARK: - Initialization functions
+    init(currentTheme: Theme) {
+        self.currentTheme = currentTheme
+        self.game = EmojiMemoryGame.createMemoryGame(withTheme: currentTheme)
+    }
+    
     private static func createMemoryGame(withTheme theme: Theme) -> MemoryGame<String> {
         return MemoryGame(theme.numberOfPairsOfCards) { pairIndex in
             if theme.emojis.indices.contains(pairIndex) {
@@ -19,13 +26,9 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    init(currentTheme: Theme) {
-        self.currentTheme = currentTheme
-        self.game = EmojiMemoryGame.createMemoryGame(withTheme: currentTheme)
-    }
-    
+    //MARK: - Connection to Model
     @Published private var game: MemoryGame<String>
-    @Published private(set) var currentTheme: Theme
+    private var currentTheme: Theme
     private let themes = [
         Theme(name: "Animals", emoijs: ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑"], numberOfPairs: 4, color: .orange),
         Theme(name: "Plants", emoijs: ["🌹", "💐", "🌸", "🌺", "🍀", "🌷", "🌻", "🌿", "🌴", "🌳", "🌵", "🪴", "🌾"], numberOfPairs: 4, color: .green),
@@ -34,8 +37,8 @@ class EmojiMemoryGame: ObservableObject {
         Theme(name: "Personal transport", emoijs: ["🚲", "🏍️", "🛴", "🚁", "⛵️"], numberOfPairs: 4, color: .purple),
         Theme(name: "Halloween", emoijs:  ["🎃", "👻", "💀", "🕷️", "😈", "☠️", "🕸️"], numberOfPairs: 4, color: .red),
     ]
-     
     
+    //MARK: - Conntection to View (Interpret)
     var cards: [MemoryGame<String>.Card] {
         return game.cards
     }
@@ -66,12 +69,10 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     //MARK: - Intents
-    
     func newGame() {
         if let theme = themes.randomElement() {
             currentTheme = theme
             currentTheme.shuffle()
-            
             game = EmojiMemoryGame.createMemoryGame(withTheme: currentTheme)
             game.shuffle()
         }
