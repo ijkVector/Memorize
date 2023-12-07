@@ -10,15 +10,15 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var emojiGame: EmojiMemoryGame
     
+    private let cardAspectRatio: CGFloat = 2/3
+    
     //MARK: - UIBlocks
     var body: some View {
         VStack {
             Text(emojiGame.name)
                 .font(.largeTitle)
-            ScrollView {
-                cards
-                    .animation(.default, value: emojiGame.cards)
-            }
+            cards
+                .animation(.default, value: emojiGame.cards)
             Text("Score: \(emojiGame.score)")
                 .foregroundColor(.red)
                 .font(.title2)
@@ -30,18 +30,43 @@ struct EmojiMemoryGameView: View {
         .padding()
     }
     
-    var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 95), spacing: 0)], spacing: 0) {
-            ForEach(emojiGame.cards) { card in
-                CardView(card)
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .padding(4)
-                    .onTapGesture {
-                        emojiGame.choose(card)
-                    }
+    private var cards: some View {
+        GeometryReader { geometry in
+            let gridItemSize = gridItemWidthThatFits(count: emojiGame.cards.count,
+                                                 size: geometry.size,
+                                                 atAspectRatio: cardAspectRatio
+            )
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemSize), spacing: 0)], spacing: 0) {
+                ForEach(emojiGame.cards) { card in
+                    CardView(card)
+                        .aspectRatio(cardAspectRatio, contentMode: .fit)
+                        .padding(4)
+                        .onTapGesture {
+                            emojiGame.choose(card)
+                        }
+                }
             }
         }
         .foregroundColor(emojiGame.color)
+    }
+    
+    private func gridItemWidthThatFits(count: Int,
+                               size: CGSize,
+                               atAspectRatio aspectRatio: CGFloat
+    ) -> CGFloat {
+        let count = CGFloat(count)
+        var columnCount = 1.0
+        repeat {
+            let widthCard = size.width / columnCount
+            let heightCard = widthCard / aspectRatio
+            let rowCount = (count / columnCount).rounded(.up)
+            if rowCount * heightCard < size.height {
+                return (size.width / columnCount).rounded(.down)
+            }
+            columnCount += 1
+        } while columnCount < count
+        
+        return min(size.width / count, size.height * aspectRatio).rounded(.down)
     }
 }
 
@@ -79,7 +104,7 @@ struct CardView: View {
 #Preview {
     EmojiMemoryGameView(emojiGame: 
                             EmojiMemoryGame(
-                                currentTheme: Theme(name: "Animals", emoijs: ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑"], numberOfPairs: 4, color: .orange)
+                                currentTheme: Theme(name: "Animals", emoijs: ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑", "🐶", "🐖"], numberOfPairs: 15 , color: .orange)
                             )
     )
 }
