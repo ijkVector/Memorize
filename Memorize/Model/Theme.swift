@@ -16,7 +16,7 @@ struct Theme: CustomDebugStringConvertible {
     init(name: String, emoijs: [String], numberOfPairs: Int, color: UIIndependentColor) {
         self.name = name
         self.emojis = emoijs
-        self.numberOfPairsOfCards = numberOfPairs
+        self.numberOfPairsOfCards = min(numberOfPairs, emoijs.count)
         self.color = color
     }
     
