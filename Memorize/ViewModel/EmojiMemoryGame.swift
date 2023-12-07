@@ -30,7 +30,7 @@ class EmojiMemoryGame: ObservableObject {
     @Published private var game: MemoryGame<String>
     private var currentTheme: Theme
     private let themes = [
-        Theme(name: "Animals", emoijs: ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑"], numberOfPairs: 4, color: .orange),
+        Theme(name: "Animals", emoijs: ["🦊", "🐿️", "🦔", "🐘", "🐄", "🦬", "🐝", "🦫", "🦑", "🐷", "🐓", "🦛","🐑"], numberOfPairs: 10, color: .orange),
         Theme(name: "Plants", emoijs: ["🌹", "💐", "🌸", "🌺", "🍀", "🌷", "🌻", "🌿", "🌴", "🌳", "🌵", "🪴", "🌾"], numberOfPairs: 4, color: .green),
         Theme(name: "Cars", emoijs: ["🏎️", "🚕", "🚙", "🚗", "🛺"], numberOfPairs: 4, color: .blue),
         Theme(name: "Public transport", emoijs: ["✈️", "🚅", "🚇", "🚃", "🛳️"], numberOfPairs: 4, color: .yellow),
