@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 class EmojiMemoryGame: ObservableObject {
     
     //MARK: - Initialization functions
