@@ -8,6 +8,7 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
+    typealias Card = MemoryGame<String>.Card
     
     //MARK: - Initialization functions
     init(currentTheme: Theme) {
@@ -38,7 +39,7 @@ class EmojiMemoryGame: ObservableObject {
     ]
     
     //MARK: - Conntection to View (Interpret)
-    var cards: [MemoryGame<String>.Card] {
+    var cards: [Card] {
         return game.cards
     }
     
@@ -77,7 +78,7 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    func choose(_ card: MemoryGame<String>.Card) {
+    func choose(_ card: Card) {
         game.choose(card)
     }
 }
